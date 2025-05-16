@@ -10,9 +10,6 @@ You can download the source and run it with a Python interpreter, but I also inc
 
 <details>
   <summary>output</summary>
-  
-  Spoiler text. Note that it's important to have a space after the summary tag. You should be able to write any markdown you want inside the `<details>` tag... just make sure you close `<details>` afterward.
-  
   ```
   Item Name                            |  NPC Price  |  Margin %  |   Hourly Vol
 --------------------------------------------------------------------------------
