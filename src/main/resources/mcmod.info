@@ -1,0 +1,16 @@
+[
+{
+  "modid": "BzFlipper",
+  "name": "BzFlipper",
+  "description": "Npc Flip Finder Made for Minecraft",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Hesam-Made-Better", "._.hesam._."],
+  "credits": "Me, I Built This Shit",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
