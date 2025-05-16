@@ -1,5 +1,6 @@
 package com.bazaarflip.bazaar;
 
+import com.bazaarflip.BazaarConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -17,10 +18,9 @@ import java.util.List;
 public class BazaarRenderer extends Gui {
     private final BazaarTracker tracker;
     private boolean showingFlips = false;
-    private int guiX = 5;
-    private int guiY = 5;
     private boolean isDragging = false;
     private int dragOffsetX, dragOffsetY;
+    private int maxWidth = 200;
 
     public BazaarRenderer(BazaarTracker tracker) {
         this.tracker = tracker;
@@ -37,23 +37,30 @@ public class BazaarRenderer extends Gui {
             FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
             List<BazaarTracker.FlipResult> results = tracker.getFlipResults();
             
-            // Draw background
-            int width = 200;
+            // Calculate dynamic width based on item names
+            maxWidth = 200;
+            for (BazaarTracker.FlipResult result : results) {
+                int itemWidth = fr.getStringWidth(result.itemName) + 100; // Extra space for profit and margin
+                maxWidth = Math.max(maxWidth, itemWidth);
+            }
+            
             int height = Math.min(results.size() * 12 + 15, 150);
-            drawRect(guiX, guiY, guiX + width, guiY + height, 0x80000000);
+            drawRect(BazaarConfig.getGuiX(), BazaarConfig.getGuiY(), 
+                     BazaarConfig.getGuiX() + maxWidth, BazaarConfig.getGuiY() + height, 
+                     BazaarConfig.getBackgroundColor());
             
             // Draw header
-            fr.drawStringWithShadow("Bazaar Flip Finder", guiX + 5, guiY + 5, 0xFFFFFF);
+            fr.drawStringWithShadow("Bazaar Flip Finder", BazaarConfig.getGuiX() + 5, BazaarConfig.getGuiY() + 5, 0xFFFFFF);
             
             // Draw results
-            int yPos = guiY + 15;
+            int yPos = BazaarConfig.getGuiY() + 15;
             for (BazaarTracker.FlipResult result : results) {
-                if (yPos > guiY + height - 12) break;
+                if (yPos > BazaarConfig.getGuiY() + height - 12) break;
                 
                 String text = String.format("%s - §6%.1f§f | §a%.1f%%§f",
                     result.itemName, result.profit, result.margin);
                 
-                fr.drawStringWithShadow(text, guiX + 5, yPos, 0xFFFFFF);
+                fr.drawStringWithShadow(text, BazaarConfig.getGuiX() + 5, yPos, 0xFFFFFF);
                 yPos += 12;
             }
         }
@@ -68,11 +75,11 @@ public class BazaarRenderer extends Gui {
         int mouseY = sr.getScaledHeight() - Mouse.getY() * sr.getScaledHeight() / Minecraft.getMinecraft().displayHeight;
         
         // Check if mouse is over GUI
-        if (mouseX >= guiX && mouseX <= guiX + 200 &&
-            mouseY >= guiY && mouseY <= guiY + 150) {
+        if (mouseX >= BazaarConfig.getGuiX() && mouseX <= BazaarConfig.getGuiX() + maxWidth &&
+            mouseY >= BazaarConfig.getGuiY() && mouseY <= BazaarConfig.getGuiY() + 150) {
             isDragging = true;
-            dragOffsetX = mouseX - guiX;
-            dragOffsetY = mouseY - guiY;
+            dragOffsetX = mouseX - BazaarConfig.getGuiX();
+            dragOffsetY = mouseY - BazaarConfig.getGuiY();
         }
     }
     
@@ -83,12 +90,16 @@ public class BazaarRenderer extends Gui {
             int mouseX = Mouse.getX() * sr.getScaledWidth() / Minecraft.getMinecraft().displayWidth;
             int mouseY = sr.getScaledHeight() - Mouse.getY() * sr.getScaledHeight() / Minecraft.getMinecraft().displayHeight;
             
-            guiX = mouseX - dragOffsetX;
-            guiY = mouseY - dragOffsetY;
+            int newX = mouseX - dragOffsetX;
+            int newY = mouseY - dragOffsetY;
             
             // Keep GUI on screen
-            guiX = Math.max(0, Math.min(sr.getScaledWidth() - 200, guiX));
-            guiY = Math.max(0, Math.min(sr.getScaledHeight() - 150, guiY));
+            newX = Math.max(0, Math.min(sr.getScaledWidth() - maxWidth, newX));
+            newY = Math.max(0, Math.min(sr.getScaledHeight() - 150, newY));
+            
+            BazaarConfig.setGuiX(newX);
+            BazaarConfig.setGuiY(newY);
+            BazaarConfig.saveConfig();
         }
     }
     

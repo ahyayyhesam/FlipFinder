@@ -17,12 +17,12 @@ import java.util.concurrent.CompletableFuture;
 public class BazaarTracker {
     private static final double MIN_BAZAAR_PRICE = 1555.0;
     private static final int MIN_HOURLY_SALES = 640;
-    private static final int UPDATE_INTERVAL = 5;
-    
     private JsonObject itemRegistry;
     private JsonObject bazaarData;
     private long lastUpdate = 0;
+    private int updateCounter = 0;
     private List<FlipResult> currentFlips = new ArrayList<>();
+    private boolean needsUpdate = true;
 
     public static class FlipResult {
         public final String itemName;
@@ -42,11 +42,16 @@ public class BazaarTracker {
     public void onClientTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.START) return;
         
-        long currentTime = System.currentTimeMillis() / 1000;
-        if (currentTime - lastUpdate < UPDATE_INTERVAL) return;
+        updateCounter++;
+        if (updateCounter >= com.bazaarflip.config.BazaarConfig.getUpdateInterval()) {
+            updateCounter = 0;
+            needsUpdate = true;
+        }
         
-        lastUpdate = currentTime;
-        updateMarketData();
+        if (needsUpdate) {
+            needsUpdate = false;
+            updateMarketData();
+        }
     }
 
     private void updateMarketData() {
