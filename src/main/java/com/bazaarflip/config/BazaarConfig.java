@@ -42,9 +42,15 @@ public class BazaarConfig {
     public static void saveConfig() {
         Property guiXProperty = config.get("gui", "x", 5);
         Property guiYProperty = config.get("gui", "y", 5);
+        Property maxItemsProperty = config.get("gui", "maxItems", 10);
+        Property bgColorProperty = config.get("gui", "backgroundColor", "80000000");
+        Property updateIntervalProperty = config.get("performance", "updateInterval", 20);
         
         guiXProperty.set(guiX);
         guiYProperty.set(guiY);
+        maxItemsProperty.set(maxDisplayItems);
+        bgColorProperty.set(String.format("%08X", backgroundColor));
+        updateIntervalProperty.set(updateInterval);
         
         config.save();
     }
@@ -55,6 +61,9 @@ public class BazaarConfig {
     public static void setGuiX(int x) { guiX = x; }
     public static void setGuiY(int y) { guiY = y; }
     public static int getMaxDisplayItems() { return maxDisplayItems; }
+    public static void setMaxDisplayItems(int items) { maxDisplayItems = items; }
     public static int getBackgroundColor() { return backgroundColor; }
+    public static void setBackgroundColor(int color) { backgroundColor = color; }
     public static int getUpdateInterval() { return updateInterval; }
+    public static void setUpdateInterval(int interval) { updateInterval = interval; }
 }

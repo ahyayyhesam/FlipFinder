@@ -1,5 +1,7 @@
 package com.bazaarflip;
 
+import com.bazaarflip.commands.BazaarFlipCommand;
+import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -26,6 +28,9 @@ public class BazaarFlipMod {
         // Register event handlers
         MinecraftForge.EVENT_BUS.register(bazaarTracker);
         MinecraftForge.EVENT_BUS.register(bazaarRenderer);
+        
+        // Register commands
+        ClientCommandHandler.instance.registerCommand(new BazaarFlipCommand());
     }
 
     public static BazaarTracker getTracker() {

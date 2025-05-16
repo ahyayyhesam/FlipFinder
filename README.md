@@ -1,39 +1,52 @@
-# 1.8.9ForgeTemplate
+# Bazaar Flipper Mod
 
-A fixed and ready to use template for minecraft forge modding on `1.8.9`
-with `shadow` plugin integrated including two useful `artifacts`. Tested flawlessly on `IntelliJ IDEA Ultimate 2022.2`
+A Minecraft Forge mod for Hypixel Skyblock that helps players find profitable bazaar flip opportunities. This mod analyzes the bazaar market data in real-time and displays potential profitable trades.
 
-```js
-       java   8
-     gradle   3.1
-     shadow   2.0.4
-  minecraft   1.8.9
-forgegradle   2.1-SNAPSHOT
-```
+## Features
 
-## Setup
-1. Clone this repository.
-2. Import `build.gradle` as a project.
-3. Let it configure.
-4. Run `setupDecompWorkspace` in Gradle: `Tasks > forgegradle > setupDecompWorkspace`
-5. Reload gradle project.
-> *Check out [#build](#build), [#run](#run) and [#artifacts](#artifacts) for more information.*
+- Real-time bazaar price tracking
+- Customizable GUI with draggable positioning
+- Configurable display settings
+- Automatic profit calculation
+- Dynamic item list sorting by profit margin
 
-## Build
-> *Note: If the build ever finishes with an error looking like `duplicate entry`, then run `clean` in Gradle: `Tasks > build > clean`*
+## Installation
 
-&emsp;Run `build` in Gradle: `Tasks > build > build`
-> Output .jar will be located in `build/libs/`
+1. Make sure you have Minecraft 1.8.9 with Forge installed
+2. Download the latest version of the mod from the releases page
+3. Place the downloaded .jar file in your Minecraft mods folder
+4. Launch Minecraft and enjoy!
 
-## Run
-&emsp;Run `genIntellijRuns` in Gradle: `Tasks > forgegradle > genIntellijRuns`
-> This will create the run configurations. <br> *Note: you will need to change the classpath module to `.main`*
+## Configuration
 
-> You should add `CopyResources` from [#artifacts](#artifacts) as a `Task before launch` and drag it in front of build.
+The mod comes with several configurable options that can be adjusted in-game:
 
-## Artifacts
-> *Note: If the artifacts are not detected on setup, you might need to restart your IntelliJ.*
+### GUI Settings
 
-&emsp;I have included two useful artifacts that I always use when developing mods:
-- `CopyMod` copies the mod from your [#build](#build) folder into your `%appdata%/.minecraft/mods`
-- `CopyResources` copies the resources folder to your `build/classes/main` so they are accessible in the development environment
+- **Position**: Drag the GUI to any position on your screen
+  - X Position: Default is 5 pixels from left
+  - Y Position: Default is 5 pixels from top
+
+- **Display**: 
+  - Maximum Items: Shows up to 10 items by default
+  - Background Color: Semi-transparent black (ARGB: 0x80000000)
+
+### Performance Settings
+
+- **Refresh Interval**: Updates every 20 ticks (1 second) by default
+
+## Usage
+
+1. Join a Hypixel Skyblock server
+2. The mod will automatically start tracking bazaar prices
+3. The GUI will display items sorted by potential profit
+4. Click and drag the GUI to reposition it on your screen
+5. Use the configuration options to customize the display to your preferences
+
+## Contributing
+
+Contributions are welcome! Feel free to submit issues and pull requests.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
