@@ -29,12 +29,14 @@ public class BazaarTracker {
         public final double profit;
         public final double margin;
         public final int hourlyVolume;
+        public final double restockHours;
 
-        public FlipResult(String itemName, double profit, double margin, int hourlyVolume) {
+        public FlipResult(String itemName, double profit, double margin, int hourlyVolume, double restockHours) {
             this.itemName = itemName;
             this.profit = profit;
             this.margin = margin;
             this.hourlyVolume = hourlyVolume;
+            this.restockHours = restockHours;
         }
     }
 
@@ -101,14 +103,22 @@ public class BazaarTracker {
             double margin = (profit / bazaarPrice) * 100;
             
             if (profit > 0) {
+                double restockHours = marketInfo.getAsJsonObject("quick_status").get("buyMovingWeek").getAsDouble() / (hourlyVolume * 168);
                 newFlips.add(new FlipResult(
                     itemObj.get("name").getAsString(),
                     profit,
                     margin,
-                    hourlyVolume
+                    hourlyVolume,
+                    restockHours
                 ));
             }
         }
+
+        newFlips.sort((a, b) -> {
+            int restockCompare = Double.compare(a.restockHours, b.restockHours);
+            if (restockCompare != 0) return restockCompare;
+            return -Double.compare(a.profit, b.profit);
+        });
 
         currentFlips = newFlips;
     }

@@ -38,8 +38,8 @@ public class BazaarRenderer extends Gui {
             List<BazaarTracker.FlipResult> results = tracker.getFlipResults();
             
             // Draw background
-            int width = 200;
-            int height = Math.min(results.size() * 12 + 15, 150);
+            int width = 300;
+            int height = Math.min(results.size() * 12 + 25, 150);
             drawRect(guiX, guiY, guiX + width, guiY + height, 0x80000000);
             
             // Draw header
@@ -50,8 +50,8 @@ public class BazaarRenderer extends Gui {
             for (BazaarTracker.FlipResult result : results) {
                 if (yPos > guiY + height - 12) break;
                 
-                String text = String.format("%s - §6%.1f§f | §a%.1f%%§f",
-                    result.itemName, result.profit, result.margin);
+                String text = String.format("%s - §6%.1f§f | §a%.1f%%§f | §b%.1f hrs§f",
+                    result.itemName, result.profit, result.margin, result.restockHours);
                 
                 fr.drawStringWithShadow(text, guiX + 5, yPos, 0xFFFFFF);
                 yPos += 12;

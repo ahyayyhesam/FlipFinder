@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import com.bazaarflip.bazaar.BazaarRenderer;
 import com.bazaarflip.bazaar.BazaarTracker;
 
-@Mod(modid = "bazaarflip", version = "1.0", clientSideOnly = true)
+@Mod(modid = "bazaarflip", version = "1.1", clientSideOnly = true)
 public class BazaarFlipMod {
     private static BazaarTracker bazaarTracker;
     private static BazaarRenderer bazaarRenderer;
