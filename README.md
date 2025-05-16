@@ -10,6 +10,7 @@ You can download the source and run it with a Python interpreter, but I also inc
 
 <details>
   <summary>output</summary>
+  
   ```
   Item Name                            |  NPC Price  |  Margin %  |   Hourly Vol
 --------------------------------------------------------------------------------
